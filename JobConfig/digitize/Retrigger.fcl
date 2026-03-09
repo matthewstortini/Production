@@ -39,13 +39,22 @@ physics : {
   }
   filters : {
     @table::TrigFilters.filters
+    @table::Digitize.filters
     @table::Trig_physMenuPSConfig
   }
   @table::TrigSequences
-  trigger_paths : [ @sequence::Trig_physMenu.trigger_paths ]
+  TriggerableLHPath : [ @sequence::Digitize.TriggerableLHSequence ]
+  TriggerableCHPath : [ @sequence::Digitize.TriggerableCHSequence ]
+  TriggerableTwoTrackPath : [ @sequence::Digitize.TriggerableTwoTrackSequence ]
+  TriggerableCaloPath : [ @sequence::Digitize.TriggerableCaloSequence ]
+  trigger_paths : [ @sequence::Trig_physMenu.trigger_paths,
+  "20:TriggerableLHPath", "21:TriggerableTwoTrackPath", "25:TriggerableCaloPath"]
   OutputPath : [ Output ]
 }
 outputs : @local::Digitize.Outputs
+outputs.Output.SelectEvents : [@sequence::Digitize.SignalTriggers,
+"TriggerableLHPath",    "TriggerableTwoTrackPath",    "TriggerableCaloPath"]
+
 end_paths : [ OutputPath ]
 
 #include "Production/JobConfig/common/epilog.fcl"
