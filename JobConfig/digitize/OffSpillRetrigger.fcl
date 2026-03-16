@@ -10,8 +10,15 @@
 #include "mu2e-trig-config/core/trigRecoSequences.fcl"
 
 BEGIN_PROLOG
-# override the trigger digitization sequence (must be before trigSequences)
-TrigRecoSequences.artFragmentsGen : []
+# Select just triggerable events, to avoid bias from the original trigger
+TriggerableTrigger: {
+      module_type : TriggerResultsFilter
+      ProcessName : Digitize
+      TriggerNames : [ "TriggerableLHPath", "TriggerableCHPath" ]
+}
+TrigRecoSequences.cfoDataGen : [ TriggerableTrigger ]
+# remove straw digi making module from the reco sequence
+TrigRecoSequences.trkPrepareHitsOffSpill  : [  TrigOffSpMakeSH, TrigOffSpMakePH ]
 END_PROLOG
 
 #include "mu2e-trig-config/core/trigSequences.fcl"
@@ -41,22 +48,17 @@ physics : {
     @table::TrigFilters.filters
     @table::Digitize.filters
     @table::Trig_physMenuPSConfig
+    TriggerableTrigger : @local::TriggerableTrigger
   }
   @table::TrigSequences
-  TriggerableLHPath : [ @sequence::Digitize.TriggerableLHSequence ]
-  TriggerableCHPath : [ @sequence::Digitize.TriggerableCHSequence ]
-  trigger_paths : [ @sequence::Trig_physMenu.trigger_paths,
-  "20:TriggerableLHPath", "30:TriggerableCHPath"]
+  trigger_paths : [ @sequence::Trig_physMenu.trigger_paths ]
   OutputPath : [ Output ]
 }
 outputs : @local::Digitize.Outputs
-outputs.Output.SelectEvents : [@sequence::Digitize.SignalTriggers,
-"TriggerableLHPath",    "TriggerableCHPath"]
+outputs.Output.SelectEvents : [@sequence::Digitize.SignalTriggers ]
 
-# Lower thresholds for LoopHelix triggerable
-physics.filters.TriggerableLH.MinParticleMom : 50.0
-physics.filters.TriggerableLH.MaxParticleMom : 300.0
-physics.filters.TriggerableCHPrescale.prescaleFactor : 10 # only record 10% of triggerable high-momentum tracks
+# turn off Lumi stream
+physics.lumiStream : []
 
 end_paths : [ OutputPath ]
 
