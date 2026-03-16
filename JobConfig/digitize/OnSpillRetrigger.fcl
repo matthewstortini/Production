@@ -1,5 +1,5 @@
 #
-# Job to drop the trigger results and re-run the trigger on existing digis
+# Job to drop the trigger results and re-run the trigger on existing OnSpill digis
 #
 #include "Offline/fcl/minimalMessageService.fcl"
 #include "Offline/fcl/standardServices.fcl"
@@ -44,7 +44,6 @@ physics : {
   }
   @table::TrigSequences
   TriggerableLHPath : [ @sequence::Digitize.TriggerableLHSequence ]
-  TriggerableCHPath : [ @sequence::Digitize.TriggerableCHSequence ]
   TriggerableTwoTrackPath : [ @sequence::Digitize.TriggerableTwoTrackSequence ]
   TriggerableCaloPath : [ @sequence::Digitize.TriggerableCaloSequence ]
   trigger_paths : [ @sequence::Trig_physMenu.trigger_paths,
