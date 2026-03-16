@@ -1,10 +1,11 @@
 #
-# Reconstruct OnSpill events. This only reconstructs LoopHelices
+# Reconstruct OnSpill events and rerun the trigger. This only reconstructs LoopHelices
 #
-#include "Production/JobConfig/reco/RecoTrig.fcl"
+#include "Production/JobConfig/reco/prolog.fcl"
+#include "Production/JobConfig/digitize/OnSpillRetrigger.fcl"
 physics.RecoPath : [ @sequence::Reconstruction.OnSpillPath ]
-physics.trigger_paths : [ @sequence::Trig_physMenu.trigger_paths, RecoPath ]
-
+physics.trigger_paths : [ @sequence::physics.trigger_paths, RecoPath ]
+process_name: RecoRetrigger
 outputs: {
   LoopHelixOutput : {
     @table::Reconstruction.Output
@@ -17,6 +18,14 @@ outputs: {
 physics.filters.LHFilter : {
   module_type : FixedFilter
   ReturnValue : true
+}
+physics.producers: {
+  @table::physics.producers
+  @table::Reconstruction.producers
+}
+physics.filters: {
+  @table::physics.filters
+  @table::Reconstruction.filters
 }
 
 physics.EndPath : [ LoopHelixOutput]
