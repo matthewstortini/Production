@@ -5,12 +5,12 @@
 #include "Production/JobConfig/digitize/OffSpillRetrigger.fcl"
 physics.CHPath : [ @sequence::Reconstruction.CentralHelixPath ]
 physics.LHPath : [ @sequence::Reconstruction.LoopHelixPath ]
-physics.trigger_paths : [ @sequence::physics.trigger_paths, LHPath, CHPath ]
+physics.trigger_paths : [ LHPath, CHPath, @sequence::physics.trigger_paths ]
 process_name: RecoRetrigger
 outputs: {
   LoopHelixOutput : {
     @table::Reconstruction.Output
-    SelectEvents : [ "LHPath" ]
+    SelectEvents : [ "TriggerablePath" ]
     fileName: "rec.owner.description-LH.version.sequencer.art"
   }
   CentralHelixOutput : {
@@ -20,11 +20,6 @@ outputs: {
  }
 }
 
-# Disable LH filtering
-physics.filters.LHFilter : {
-  module_type : FixedFilter
-  ReturnValue : true
-}
 physics.producers: {
   @table::physics.producers
   @table::Reconstruction.producers

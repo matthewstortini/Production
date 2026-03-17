@@ -3,22 +3,18 @@
 #
 #include "Production/JobConfig/reco/prolog.fcl"
 #include "Production/JobConfig/digitize/OnSpillRetrigger.fcl"
+
 physics.RecoPath : [ @sequence::Reconstruction.OnSpillPath ]
-physics.trigger_paths : [ @sequence::physics.trigger_paths, RecoPath ]
+physics.trigger_paths : [ RecoPath, @sequence::physics.trigger_paths ]
 process_name: RecoRetrigger
 outputs: {
   LoopHelixOutput : {
     @table::Reconstruction.Output
-    SelectEvents : [ "RecoPath" ]
+    SelectEvents : [ "TriggerablePath" ]
     fileName: "rec.owner.description.version.sequencer.art"
   }
 }
 
-# Disable LH filtering
-physics.filters.LHFilter : {
-  module_type : FixedFilter
-  ReturnValue : true
-}
 physics.producers: {
   @table::physics.producers
   @table::Reconstruction.producers

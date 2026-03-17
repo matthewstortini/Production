@@ -18,49 +18,13 @@ TriggerableTrigger: {
       ProcessName : Digitize
       TriggerNames : [ "TriggerableLHPath",    "TriggerableTwoTrackPath",    "TriggerableCaloPath" ]
 }
-TrigRecoSequences.cfoDataGen : [ TriggerableTrigger ]
-# remove straw digi making module from the reco sequence
-TrigRecoSequences.trkPrepareHits : [ TrigMakeSH     , TrigMakePH     , TrigFlagPH ]
+# run ProcessCFOData to create EventHeader as a patch until that is put into the normal digi output
+TrigRecoSequences.cfoDataGen : [ TriggerableTrigger, ProcessCFOData ]
 END_PROLOG
 
 #include "mu2e-trig-config/core/trigSequences.fcl"
 #include "mu2e-trig-config/gen/trig_physMenuPSConfig_OnSpill.fcl"
 #include "mu2e-trig-config/gen/trig_physMenu_OnSpill.fcl"
 #
-process_name: Retrigger
-source : {
-  module_type : RootInput
-  inputCommands: ["keep *",
-    "drop mu2e::HelixSeed*_*_*_*",
-    "drop mu2e::KalSeed*_*_*_*",
-    "drop mu2e::TriggerInfo_*_*_*",
-    "drop mu2e::CaloClusters_*_*_*",
-    "drop mu2e::TimeClusters_*_*_*",
-    "drop mu2e::CosmicTrackSeeds_*_*_*",
-    "drop mu2e::IntensityInfo*_*_*_*",
-    "drop mu2e::RecoCount_*_*_*",
-    "drop mu2e::PrescaleFilterFraction_*_*_Digitize"  ]
-}
-services : @local::Services.Reco
-physics : {
-  producers : {
-    @table::TrigProducers.producers
-  }
-  filters : {
-    @table::TrigFilters.filters
-    @table::Digitize.filters
-    @table::Trig_physMenuPSConfig
-    TriggerableTrigger : @local::TriggerableTrigger
-  }
-  @table::TrigSequences
-  trigger_paths : [ @sequence::Trig_physMenu.trigger_paths ]
-  OutputPath : [ Output ]
-}
-outputs : @local::Digitize.Outputs
-outputs.Output.SelectEvents : [@sequence::Digitize.SignalTriggers ]
-# turn off Lumi stream
-physics.lumiStream : []
-end_paths : [ OutputPath ]
+#include "Production/JobConfig/digitize/Retrigger.fcl"
 
-#include "Production/JobConfig/common/epilog.fcl"
-#include "mu2e-trig-config/core/trigDigiInputsEpilog.fcl"
