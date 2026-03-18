@@ -169,6 +169,7 @@ Digitize: {
 
   TriggerProducts : [
     "keep art::TriggerResults_*_*_*",
+    "keep mu2e::EventHeader_*_*_*",
     "keep mu2e::CaloClusters_*_*_*",
     "keep mu2e::TriggerInfo_*_*_*",
     "keep mu2e::TriggerInfoCollection_*_*_*",
