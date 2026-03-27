@@ -20,17 +20,18 @@ physics: {
   analyzers : {
     VDResamplerTrainingSetup : {
       module_type : VDResamplerConfigure
-      StepPointMCsTag : @local::SimplifyStage1Data.StepPointMCsTag
-      SimParticlemvTag : @local::SimplifyStage1Data.SimParticlemvTag
+      StepPointMCsTag : "compressDetStepMCsSTM:"
+      SimParticlemvTag : "compressDetStepMCsSTM:"
       VirtualDetectorID : 116
       VDResamplerDir : "Offline/STMMC/VDResamplerFiles"
       fclDir : "Production/pileup/STM"
-      dataSourceTag : "MuBeam"
+      dataSourceTag : MuBeam
       trainingThreshold : 100
       doROOTDump: true
     }
   }
-  end_paths: [VDResamplerTrainingSetup]
+  o1: [VDResamplerTrainingSetup]
+  end_paths: [o1]
 }
 
 # if allows ROOTDump, specify output file name

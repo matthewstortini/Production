@@ -31,7 +31,8 @@ physics: {
       doROOTDump: true
     }
   }
-  end_paths: [VDResamplerGenerator]
+  o1: [VDResamplerGenerator]
+  end_paths: [o1]
 }
 
 # if allows ROOTDump, specify output file name
