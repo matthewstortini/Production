@@ -24,7 +24,7 @@ physics: {
       SimParticlemvTag : "compressDetStepMCsSTM:"
       VirtualDetectorID : 116
       VDResamplerDir : "Offline/STMMC/VDResamplerFiles"
-      fclDir : "Production/pileup/STM"
+      fclDir : "Production/JobConfig/pileup/STM"
       dataSourceTag : MuBeam
       trainingThreshold : 100
       doROOTDump: true

@@ -1,5 +1,6 @@
-# Provides a pass of the data and set up fcl's to train the SBDM models that 
-# describe particle distributions at a selected VD.
+# Generate samples from multiple Score-Based Diffusion Models from a list of sources. 
+# The samples from each source are mixed according to their corresponding POTs. 
+# A demonstrator of module function and allows root sample dump for study. 
 
 #include "Offline/STMMC/fcl/prolog.fcl"
 #include "Offline/fcl/standardServices.fcl"
@@ -18,16 +19,17 @@ services : {
 }
 physics: {
   producers : {
+    # Enter a list [aaa, bbb, ...] of hitSummaryFiles and a list of corresponding POTs at run
     VDResamplerGenerator : {
       module_type : VDResamplerGenerateMix
-      hitSummaryFiles : []
-      potsPerFile : []
+      hitSummaryFiles : @nil
+      potsPerFile : @nil
       ModelFileDir: "Offline/STMMC/VDResamplerFiles"
-      # VirtualDetectorID : 116
+      # VirtualDetectorID : 116 # default break-off point for STM downstream
       useHeun : true
       diffusionSteps : 200
-      # VDz0 : 37700.39
-      # VDr : 2000.0
+      # VDz0 : 37700.39 # z-coordinates of VD116. Only change when another VD is used
+      # VDr : 2000.0 # radius of VD116. Only change when another VD is used
       doROOTDump: true
     }
   }
