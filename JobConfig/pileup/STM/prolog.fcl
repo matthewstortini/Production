@@ -50,6 +50,11 @@ STMPileup: {
   ]
   # define some common sequences
   stmResamplerSequence : [genCounter, protonTimeOffset, stmResampler]
+
+  VDResamplerSource : {
+    module_type : RootInput
+    fileNames: @nil
+  }
 }
 
 END_PROLOG

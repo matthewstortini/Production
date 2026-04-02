@@ -6,16 +6,10 @@
 
 process_name: VDResamplerConfigureTrainer
 
-source : {
-  module_type : RootInput
-  fileNames: @nil
-}
-services : {
-  message : @local::default_message
-  GlobalConstantsService : {
-    inputFile : "Offline/GlobalConstantsService/data/globalConstants_01.txt"
-  }
-}
+source : @local::STMPileup.VDResamplerSource
+
+services : @local::Services.Sim
+
 physics: {
   analyzers : {
     VDResamplerTrainingSetup : {

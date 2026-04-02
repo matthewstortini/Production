@@ -6,16 +6,10 @@
 
 process_name: VDResamplerGenerateFromModel
 
-source : {
-  module_type : RootInput
-  fileNames: @nil
-}
-services : {
-  message : @local::default_message
-  GlobalConstantsService : {
-    inputFile : "Offline/GlobalConstantsService/data/globalConstants_01.txt"
-  }
-}
+source : @local::STMPileup.VDResamplerSource
+
+services : @local::Services.Sim
+
 physics: {
   producers : {
     # replace either a pair of stage 1 and stage 2 model files or an allAtOnceModelFile for the placeholder while running this module
