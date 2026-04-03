@@ -14,5 +14,4 @@ physics.trigger_paths : ["DigitizePath", @sequence::physics.TriggerableBits, @se
 # Select all triggered events
 outputs.Output.SelectEvents : [ @sequence::Trig_mdsMenu.trigger_list ]
 
-#include "Production/JobConfig/common/epilog.fcl"
 #include "mu2e-trig-config/core/trigDigiInputsEpilog.fcl"
