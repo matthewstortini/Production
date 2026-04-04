@@ -22,6 +22,8 @@
 #include "mu2e-trig-config/gen/trig_noFieldMenu.fcl"
 #include "mu2e-trig-config/gen/trig_extrPosMenuPSConfig.fcl"
 #include "mu2e-trig-config/gen/trig_extrPosMenu.fcl"
+#include "mu2e-trig-config/gen/trig_mdsMenuPSConfig.fcl"
+#include "mu2e-trig-config/gen/trig_mdsMenu.fcl"
 
 BEGIN_PROLOG
 
